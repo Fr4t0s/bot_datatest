@@ -16,11 +16,11 @@ faker = Faker('ru_RU')
 main_menu_reply_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 # первый ряд кнопок
 main_menu_reply_markup.row(
-    types.KeyboardButton(text="1️⃣"), types.KeyboardButton(text="2️⃣")
+    types.KeyboardButton(text="1 пользователь"), types.KeyboardButton(text="2 пользователя"), types.KeyboardButton(text="3 пользователя")
 )
 # второй ряд кнопок
 main_menu_reply_markup.row(
-    types.KeyboardButton(text="5️⃣"), types.KeyboardButton(text="🔟")
+    types.KeyboardButton(text="10 пользователей"), types.KeyboardButton(text="20 пользователей")
 )
 
 # обработчик команды '/start'
@@ -42,14 +42,16 @@ def message_handler(message: types.Message):
     # определяем количество тестовых пользователей
     # или отправляем ошибку
     payload_len = 0
-    if message.text == "1️⃣":
+    if message.text == "1 пользователь" or message.text == "1":
         payload_len = 1
-    elif message.text == "2️⃣":
+    elif message.text == "2 пользователя" or message.text == "2":
         payload_len = 2
-    elif message.text == "5️⃣":
-        payload_len = 5
-    elif message.text == "🔟":
+    elif message.text == "3 пользователя" or message.text == "3":
+        payload_len = 3
+    elif message.text == "10 пользователей" or message.text == "10":
         payload_len = 10
+    elif message.text == "20 пользователей" or message.text == "20":
+        payload_len = 20
     else:
         bot.send_message(chat_id=message.chat.id, text="Не понимаю тебя :(")
         return
