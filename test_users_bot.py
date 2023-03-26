@@ -1,4 +1,3 @@
-# подключение библиотек
 import json
 from secrets import token_urlsafe
 
@@ -10,18 +9,20 @@ TOKEN = '6133021303:AAFNEOmOP4la4JXyv7HWgdSKn49UuMojmqs'
 bot = TeleBot(TOKEN, parse_mode='html')
 # утилита для генерации номеров кредитных карт
 # указываем язык - русский
-faker = Faker('ru_RU') 
+faker = Faker('ru_RU')
 
 # объект клавиаутры
 main_menu_reply_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 # первый ряд кнопок
 main_menu_reply_markup.row(
-    types.KeyboardButton(text="1 пользователь"), types.KeyboardButton(text="2 пользователя"), types.KeyboardButton(text="3 пользователя")
+    types.KeyboardButton(text="1 пользователь"), types.KeyboardButton(text="2 пользователя"),
+    types.KeyboardButton(text="3 пользователя")
 )
 # второй ряд кнопок
 main_menu_reply_markup.row(
-    types.KeyboardButton(text="10 пользователей"), types.KeyboardButton(text="20 пользователей")
+    types.KeyboardButton(text="10 пользователей")
 )
+
 
 # обработчик команды '/start'
 @bot.message_handler(commands=['start'])
@@ -30,8 +31,8 @@ def start_message_handler(message: types.Message):
     # не забываем прикрепить объект клавиатуры к сообщению
     bot.send_message(
         chat_id=message.chat.id,
-        text="Привет!\nЭто бот для генерации тестовых пользователей. "\
-        "Выбери сколько пользователей тебе нужно 👇🏻",
+        text="Привет!\nЭто бот для генерации тестовых пользователей. " \
+             "Выбери сколько пользователей тебе нужно 👇🏻",
         reply_markup=main_menu_reply_markup
     )
 
@@ -50,8 +51,6 @@ def message_handler(message: types.Message):
         payload_len = 3
     elif message.text == "10 пользователей" or message.text == "10":
         payload_len = 10
-    elif message.text == "20 пользователей" or message.text == "20":
-        payload_len = 20
     else:
         bot.send_message(chat_id=message.chat.id, text="Не понимаю тебя :(")
         return
@@ -78,15 +77,15 @@ def message_handler(message: types.Message):
     # отправляем результат
     bot.send_message(
         chat_id=message.chat.id,
-        text=f"Данные {payload_len} тестовых пользователей:\n<code>"\
-        f"{payload_str}</code>"
+        text=f"Данные {payload_len} тестовых пользователей:\n<code>" \
+             f"{payload_str}</code>"
     )
     bot.send_message(
         chat_id=message.chat.id,
         text="Если нужны еще данные, можешь выбрать еще раз 👇🏻",
         reply_markup=main_menu_reply_markup
     )
-    
+
 
 # главная функция программы
 def main():
